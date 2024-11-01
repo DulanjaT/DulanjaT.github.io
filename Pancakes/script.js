@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const deliveryOptions = document.querySelectorAll("input[name='delivery']");
     const totalPriceElement = document.getElementById("totalPrice");
     const orderSummary = document.querySelector(".order-summary");
-    const orderButton = document.querySelector("button");
+    const orderButton = document.getElementById("button");
     let orders = [];
 
     // Function to calculate total price
@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // Update summary in the UI
         document.getElementById("order_name").textContent = customer;
         document.getElementById("order_type").textContent = selectedPancake;
-        document.getElementById("order_toppings").textContent = selectedToppings.length > 0 ? selectedToppings.join(", ") : "None";
+        document.getElementById("order_toppings").textContent = selectedToppings.length > 0 ? selectedToppings.join() : "None";
         document.getElementById("order_extras").textContent = selectedExtras.length > 0 ? selectedExtras.join(", ") : "None";
         document.getElementById("order_delivery").textContent = selectedDelivery;
         document.getElementById("order_price").textContent = totalPriceElement.textContent;

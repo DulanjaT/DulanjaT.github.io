@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <link rel="stylesheet" href="stylesheet.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anta&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Mate+SC&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="assets/Favicon.svg">
+</head>
+
+<body>
+    <div class="wrapper">
+    <header>
+        
+        
+        <!-- Sidebar and Logo -->
+        <nav class="nav">
+            <img src="assets/logo_white.png" alt="Logo" class="logo">
+            <img src="assets/icons_mobile.svg" alt="Mobile menu" class="mobile">
+            <ul>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#aboutme">About Me</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="gallery.html#gallery">Gallery</a></li>
+                <li><a href="#contactform">Contact</a></li>
+                
+            </ul>
+        </nav>
+        
+        <!-- Main Container -->
+        <main class="page-content">
+            <!-- Hero Banner Section -->
+            <section class="hero-banner">
+                <h1>Welcome to My Portfolio</h1>
+                <p>Hi, I'm Dulanja Gunawardena, a web developer who turns coffee into
+                    code and ideas into sleek, responsive websites.</p>
+            </section>
+        </header>
+
+        <!-- Projects Section -->
+        
+        <section id="projects" >
+            <h2>Projects</h2>
+            
+            <div class="card-container">
+                <div class="card">
+                    <img class="project-img" src="assets/projects_card2.jpg" alt="Laptop with web design screen">
+                    <div class="card-content">
+                        <h3>Website For The Startup Project</h3>
+                        <p>Xtenture</p>
+                       <div class="card-btn">
+                           <a href="" class="card-btn">Read More</a>
+
+                       </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <img class="project-img" src="assets/projects_card1.jpg" alt="Spinning circle gif">
+                    <div class="card-content">
+                        <h3>Application for the school project</h3>
+                        <p>Cars Application</p>
+                        <div class="card-btn">
+                        <a href="" class="card-btn">Read More</a>
+                    </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <img class="project-img" src="assets/projects_card3.jpg" alt="JavaScript Picture Card">
+                    <div class="card-content">
+                        <h3>Application For The Startup Project</h3>
+                        <p>Pancake Application</p>
+                        <div class="card-btn">
+                        <a href="" class="card-btn">Read More</a>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+         
+        <!-- About me Section -->
+        <section id="aboutme" >
+            <h2 id="h2aboutme">About me</h2>
+            <article>
+                <img id="section-img" src="assets/about_me.jpg" alt="About me Image">
+            <p>
+                Hello! I’m Dulanja Gunawardena, a web developer with 4 years of experience in crafting smooth, responsive, and stylish websites. Armed with a powerful toolkit of JavaScript, React, NodeJs, HTML,and CSS, I turn complex ideas into pixel-perfect digital experiences. From designing seamless front-end interfaces to handling the behind-the-scenes wizardry of back-end development, I’m all about creating code that works like magic. When I'm not wrangling code, I’m probably debugging… or celebrating the fact that I didn’t have to debug (yet)! Let’s build something amazing together.</p>
+            </article>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="section">
+            <h2>Skills</h2>
+            <div class="card-container">
+                <div class="card">
+                    <img src="assets/html_icon.png" alt="HTML Icon" class="skill-icon">
+                    <h3>HTML</h3>
+                    <div class="progress-bar">
+                        <div class="progress" ></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <img src="assets/css_icon.png" alt="CSS Icon" class="skill-icon">
+                    <h3>CSS</h3>
+                    <div class="progress-bar">
+                        <div class="progress" ></div>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="assets/javascript_icon.webp" alt="JavaScript Icon" class="skill-icon">
+                    <h3>JavaScript</h3>
+                    <div class="progress-bar">
+                        <div class="progress" ></div>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="assets/react_icon.png" alt="JavaScript Icon" class="skill-icon">
+                    <h3>ReactJs</h3>
+                    <div class="progress-bar">
+                        <div class="progress" ></div>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="assets/node_icon.png" alt="JavaScript Icon" class="skill-icon">
+                    <h3>NodeJs</h3>
+                    <div class="progress-bar">
+                        <div class="progress" ></div>
+                    </div>
+                </div>
+                
+                <!-- Add more skill cards as needed -->
+            
+        </section>
+    
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <!-- Start of Contact form -->
+        <div class="form-wrap">
+            
+            
+            <form id="contactform">
+                
+                <h1>Contact Me</h1>
+                <div class="form-item">
+                <label for="yourname">Your name</label>
+                <input type="text" name="yourname" id="name-input">
+                </div>
+
+                <div class="form-item">
+                <label for="email">Your email</label>
+                <input type="email" name="email" id="email-input">
+                </div>
+
+                <div class="form-item">
+                <label for="message">Message</label>  
+                <input type="text" name="message" id="message-input">
+                </div>
+                
+                <div class="form-item">
+                <button type="submit" id="submit-btn">SEND MESSAGE</button>
+                </div>
+            </form>
+
+        </div>
+        <div class="socials-container">
+        <div class="social-icons">
+            <a href="https://www.facebook.com/djey.tim/" target="_blank">
+                <img src="assets/facebook_icon.png" alt="Facebook" class="social-icon">
+            </a>
+            <a href="https://www.instagram.com/dulanja_g/" target="_blank">
+                <img src="assets/instagram_icon.png" alt="Instagram" class="social-icon">
+            </a>
+            <a href="https://github.com/DulanjaT/" target="_blank">
+                <img src="assets/github_icon.webp" alt="Github" class="social-icon">
+            </a>
+        </div>
+    </div>
+        <p>&copy; 2024 Dulanja Gunawardena. All rights reserved.</p>
+        
+        <img id="backtopBtn" src="assets/backtoTop_button.webp" alt="Back to top icon" class="icons">
+        
+    </footer>
+    
+    <script src="script.js"></script>
+</body>
+
+</html>
