@@ -1,43 +1,40 @@
-const backToTop = this.document.querySelector("#backtopBtn");
-const navList = document.querySelector("nav ul")
-const mobButton = document.querySelector(".mobile")
+const scrollUpButton = document.querySelector("#backtopBtn");
+const menuList = document.querySelector("nav ul");
+const mobileToggle = document.querySelector(".mobile");
 
-function toggleMenu() {
-    navList.classList.toggle("responsive")
+function toggleNavigation() {
+    menuList.classList.toggle("expanded");
 }
-mobButton.addEventListener("click",toggleMenu)
+mobileToggle.addEventListener("click", toggleNavigation);
 
-window.addEventListener('scroll', function() {
-    const header = document.querySelector("nav");
-    
-    header.classList.toggle('scrolled', window.scrollY > 50);
-    backToTop.classList.toggle("hidden",window.scrollY < 50);
+window.addEventListener('scroll', () => {
+    const navigationBar = document.querySelector("nav");
+
+    navigationBar.classList.toggle('isScrolled', window.scrollY > 50);
+    scrollUpButton.classList.toggle("hide", window.scrollY < 50);
 });
 
-backToTop.addEventListener("click",() => {
-    document.body.scrollTop= 0;
+scrollUpButton.addEventListener("click", () => {
+    document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
-    
-    })
+});
+
+console.log(scrollUpButton);
 
 
-console.log(backToTop)
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', function (event) {
+        event.preventDefault();
+        const destinationId = this.getAttribute('href').substring(1);
+        const destinationElement = document.getElementById(destinationId);
 
-
-// Script to adjust scroll when clicking links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        const targetId = this.getAttribute('href').substring(1);
-        const targetElement = document.getElementById(targetId);
-
-        if (targetElement) {
-            const headerOffset = 60; 
-            const elementPosition = targetElement.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+        if (destinationElement) {
+            const offset = 60;
+            const destinationPosition = destinationElement.getBoundingClientRect().top;
+            const adjustedPosition = destinationPosition + window.pageYOffset - offset;
 
             window.scrollTo({
-                top: offsetPosition,
+                top: adjustedPosition,
                 behavior: 'smooth'
             });
         }
