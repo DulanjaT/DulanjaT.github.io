@@ -2,8 +2,11 @@ const scrollUpButton = document.querySelector("#backtopBtn");
 const menuList = document.querySelector("nav ul");
 const mobileToggle = document.querySelector(".mobile");
 
+
 function toggleNavigation() {
-    menuList.classList.toggle("expanded");
+    menuList.classList.toggle("responsive");
+    console.log(menuList.classList.contains("responsive"));
+
 }
 mobileToggle.addEventListener("click", toggleNavigation);
 
@@ -19,7 +22,7 @@ scrollUpButton.addEventListener("click", () => {
     document.documentElement.scrollTop = 0;
 });
 
-console.log(scrollUpButton);
+
 
 
 document.querySelectorAll('a[href^="#"]').forEach(link => {
