@@ -1,127 +1,171 @@
-// Car class definition
-class Car {
-    constructor(license, maker, model, owner, price, year, color) {
-        this.license = license;
-        this.maker = maker;
-        this.model = model;
-        this.owner = owner;
-        this.price = price;
-        this.year = year;
-        this.color = color;
+"use strict";
+
+// Accessing the form elements and initializing the array to store car data
+const carAdditionForm = document.querySelector("#addCar");
+const carSearchForm = document.querySelector("#searchCar");
+const carInventory = [];
+
+// Defining a class to represent car details
+class Vehicle {
+    constructor(plateNumber, manufacturer, carModel, ownerName, cost, paintColor, manufacturingYear) {
+        this.plateNumber = plateNumber; // License plate
+        this.manufacturer = manufacturer; // Car maker
+        this.carModel = carModel; // Car model
+        this.ownerName = ownerName; // Owner name
+        this.cost = parseFloat(cost); // Car price
+        this.paintColor = paintColor; // Car color
+        this.manufacturingYear = parseInt(manufacturingYear); // Year of manufacture
     }
 
-    // Method to calculate discount based on the car's age
-    calculateDiscount() {
+    // Method to calculate car age
+    calculateAge() {
         const currentYear = new Date().getFullYear();
-        const age = currentYear - this.year;
-        return age > 10 ? this.price * 0.85 : this.price;
+        return currentYear - this.manufacturingYear;
+    }
+
+    // Method to get discounted price based on car age
+    calculateDiscountPrice() {
+        return this.calculateAge() > 10 ? this.cost * 0.85 : this.cost;
+    }
+
+    // Check if car is eligible for discount
+    hasDiscount() {
+        return this.calculateAge() > 10;
     }
 }
 
-// Array to store car objects
-let carsArray = [];
+// Function to display messages to the user
+const showNotification = (msg, type = "success") => {
+    const notificationElement = document.querySelector("#message");
+    notificationElement.textContent = msg;
+    notificationElement.className = type;
+    setTimeout(() => {
+        notificationElement.textContent = "";
+        notificationElement.className = "";
+    }, 3000);
+};
 
-// Function to display cars in the table
-function displayCars() {
-    const tbody = document.querySelector("#carsTable tbody");
-    tbody.innerHTML = ""; // Clear the table body
-
-    carsArray.forEach(car => {
-        const row = document.createElement("tr");
-
-        // Create cells for each car property
-        row.innerHTML = `
-        <td>${car.license}</td>
-        <td>${car.maker}</td>
-        <td>${car.model}</td>
-        <td>${car.owner}</td>
-        <td>${car.year}</td>
-        <td><div style="background-color: ${car.color}; width: 50px; height: 20px;"></div></td>
-        <td>${car.price}€</td>
-        <td>${car.calculateDiscount() < car.price ? car.calculateDiscount().toFixed(2) + "€" : "No Discount"}</td>
-        <td><button class="delete" onclick="deleteCar('${car.license}')">Delete</button></td>
-      `;
-        tbody.appendChild(row);
-    });
-}
-
-// Function to add a car
-function addCar(e) {
-    e.preventDefault(); // Prevent form submission reload
-
-    const license = document.getElementById("license").value.trim();
-    const maker = document.getElementById("maker").value.trim();
-    const model = document.getElementById("model").value.trim();
-    const owner = document.getElementById("owner").value.trim();
-    const price = parseFloat(document.getElementById("price").value);
-    const year = parseInt(document.getElementById("year").value);
-    const color = document.getElementById("color").value;
-
-    // Validation
-    if (!license || !maker || !model || !owner || isNaN(price) || isNaN(year)) {
-        showMessage("Please fill in all required fields correctly", "error");
-        return;
-    }
-    if (price <= 0) {
-        showMessage("Price must be a positive number", "error");
-        return;
-    }
-    const currentYear = new Date().getFullYear();
-    if (year < 1886 || year > currentYear) {
-        showMessage(`Year must be between 1886 and ${currentYear}`, "error");
-        return;
-    }
-
-    // Create new car object and add it to the array
-    const car = new Car(license, maker, model, owner, price, year, color);
-    carsArray.push(car);
-
-    // Display the updated car list and reset the form
-    displayCars();
-    document.getElementById("addCar").reset();
-    showMessage("Car added successfully", "success");
-}
-
-// Function to delete a car
-function deleteCar(license) {
-    carsArray = carsArray.filter(car => car.license !== license);
-    displayCars();
-    showMessage("Car deleted successfully", "success");
-}
-
-// Function to search for a car by license plate
-function searchCar(event) {
+// Function to add a new car
+const saveCar = (event) => {
     event.preventDefault();
 
-    const searchValue = document.getElementById("search").value.trim();
+    try {
+        // Extract input values and validate
+        const plateNumber = document.querySelector("#license").value.trim();
+        const manufacturer = document.querySelector("#maker").value.trim();
+        const carModel = document.querySelector("#model").value.trim();
+        const ownerName = document.querySelector("#owner").value.trim();
+        const cost = parseFloat(document.querySelector("#price").value.trim());
+        const paintColor = document.querySelector("#color").value.trim();
+        const manufacturingYear = parseInt(document.querySelector("#year").value.trim());
+        const currentYear = new Date().getFullYear();
 
-    if (!searchValue) {
-        showMessage("Please enter a license plate to search", "error");
-        return;
+        if (!plateNumber || !manufacturer || !carModel || !ownerName || isNaN(cost) || !paintColor || isNaN(manufacturingYear)) {
+            throw new Error("All fields are required and must be valid.");
+        }
+
+        if (cost <= 0) {
+            throw new Error("Price must be a positive number.");
+        }
+
+        if (manufacturingYear < 1886 || manufacturingYear > currentYear) {
+            throw new Error(`Year must be between 1886 and ${currentYear}.`);
+        }
+
+        // Create a new car object and store it
+        const carData = new Vehicle(plateNumber, manufacturer, carModel, ownerName, cost, paintColor, manufacturingYear);
+        carAdditionForm.reset();
+        carInventory.push(carData);
+
+        // Save updated inventory to local storage
+        localStorage.setItem('carInventory', JSON.stringify(carInventory));
+
+        // Update the table and notify the user
+        renderTable();
+        showNotification("Car added successfully!");
+
+    } catch (error) {
+        showNotification(error.message, "error");
     }
+};
 
-    const car = carsArray.find(car => car.license === searchValue);
+// Function to load cars from local storage
+const initializeCars = () => {
+    const storedData = localStorage.getItem('carInventory');
+    if (storedData) {
+        const parsedCars = JSON.parse(storedData);
+        parsedCars.forEach((car) => {
+            carInventory.push(new Vehicle(car.plateNumber, car.manufacturer, car.carModel, car.ownerName, car.cost, car.paintColor, car.manufacturingYear));
+        });
+        renderTable();
+    }
+};
 
-    const searchResult = document.getElementById("searchResult");
+// Function to display car data in a table
+const renderTable = () => {
+    const tableBody = document.querySelector("#carsTable");
 
-    if (car) {
-        const discountedPrice = car.calculateDiscount() < car.price ? car.calculateDiscount().toFixed(2) + "€" : "No Discount";
-        searchResult.textContent = `Found Car: ${car.maker} ${car.model}, Owner: ${car.owner}, Price: ${car.price}€, Discounted Price: ${discountedPrice}`;
+    // Reset the table content while keeping the header
+    tableBody.innerHTML = tableBody.rows[0].innerHTML;
+
+    carInventory.forEach((car, index) => {
+        const row = tableBody.insertRow(-1);
+        const { plateNumber, manufacturer, carModel, ownerName, manufacturingYear, paintColor, cost } = car;
+
+        // Insert car details into the table
+        [plateNumber, manufacturer, carModel, ownerName, manufacturingYear, paintColor].forEach((value) => {
+            row.insertCell(-1).textContent = value ?? 'N/A';
+        });
+
+        row.insertCell(-1).textContent = `${cost.toFixed(2)}€`;
+
+        // Add discounted price if applicable
+        const discountInfo = car.hasDiscount() ? `$${car.calculateDiscountPrice().toFixed(2)}` : "No Discount";
+        row.insertCell(-1).textContent = discountInfo;
+
+        // Add delete button to each row
+        const removeBtn = document.createElement("button");
+        removeBtn.textContent = "Delete";
+        removeBtn.classList.add("delete");
+        removeBtn.addEventListener("click", () => removeCar(index));
+        row.insertCell(-1).appendChild(removeBtn);
+    });
+};
+
+// Function to delete a car
+const removeCar = (index) => {
+    carInventory.splice(index, 1);
+    localStorage.setItem('carInventory', JSON.stringify(carInventory));
+    renderTable();
+    showNotification("Car deleted successfully!");
+};
+
+// Function to search for a car by license plate
+const findCar = (event) => {
+    event.preventDefault();
+    const searchQuery = document.querySelector("#search").value.trim();
+    const result = carInventory.find((car) => car.plateNumber.toLowerCase() === searchQuery.toLowerCase());
+    const searchResultDisplay = document.querySelector("#searchResult");
+
+    if (result) {
+        const originalCost = result.cost.toFixed(2);
+        const discountedCost = result.hasDiscount() ? `$${result.calculateDiscountPrice().toFixed(2)}` : "No Discount";
+
+        searchResultDisplay.innerHTML = `
+            <p>Maker: ${result.manufacturer}</p>
+            <p>Model: ${result.carModel}</p>
+            <p>Owner: ${result.ownerName}</p>
+            <p>Year: ${result.manufacturingYear}</p>
+            <p>Original Price: $${originalCost}</p>
+            <p>Discounted Price: ${discountedCost}</p>
+            <p>Color: ${result.paintColor}</p>
+        `;
     } else {
-        searchResult.textContent = "Car not found";
+        searchResultDisplay.innerHTML = "<p>No car found with the given license plate.</p>";
     }
-}
+};
 
-// Function to show success/error message
-function showMessage(message, type) {
-    const messageDiv = document.getElementById("message");
-    messageDiv.textContent = message;
-    messageDiv.className = type; // Add success or error class
-
-
-
-}
-
-// Event listeners
-document.getElementById("addCar").addEventListener("submit", addCar);
-document.getElementById("searchCar").addEventListener("submit", searchCar);
+// Attach event listeners
+carAdditionForm.addEventListener("submit", saveCar);
+carSearchForm.addEventListener("submit", findCar);
+window.addEventListener('load', initializeCars);

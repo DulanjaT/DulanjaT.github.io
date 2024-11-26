@@ -1,180 +1,233 @@
+/* General Reset and Box Sizing */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    background-color: #4ea9cc;
-    font-family: "Manrope", sans-serif;
-  }
-  
-  h2 {
-    margin: 2rem 0;
-  }
-  
-  .container {
-    max-width: 1200px;
-    margin: 2rem auto;
-    background-color: white;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  header div {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-  }
-  header form {
-    width: 50%;
-  }
-  
-  .search_result {
-    display: block;
-    height: auto;
-    padding: 20px 0;
-    font-size: 1.1rem;
-    color: #333;
-  }
-  
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+  background: linear-gradient(135deg, #4ecc69, #78037c);
+  color: #333;
+  font-family: "Manrope", sans-serif;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* Headings */
+h1, h2 {
+  text-align: center;
+  color: #ffffff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+h2 {
+  margin: 2rem 0;
+}
+
+/* Container Styling */
+.container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.container:hover {
+  transform: scale(1.02);
+}
+
+/* Header Styling */
+header div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+header form {
+  width: 50%;
+}
+
+/* Search Result Styling */
+.search_result {
+  display: block;
+  height: auto;
+  padding: 20px 0;
+  font-size: 1.2rem;
+  color: #444;
+}
+
+/* Label Styling */
+label {
+  display: inline-block;
+  width: 80px;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+/* Form Groups */
+.form_group {
+  margin: 1rem 0;
+}
+
+/* Input Fields */
+input {
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 0.625rem;
+  border: 2px solid #035a7c;
+  border-radius: 6px;
+  width: 100%;
+  max-width: 300px;
+  transition: border-color 0.3s ease;
+}
+
+input:focus {
+  border-color: #4ea9cc;
+  outline: none;
+  box-shadow: 0 0 5px rgba(78, 169, 204, 0.8);
+}
+
+/* Buttons */
+button {
+  font-family: inherit;
+  background: linear-gradient(90deg, #035a7c, #4ea9cc);
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 5px;
+  border: none;
+  margin: 1rem 0 1rem;
+  text-transform: capitalize;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+button:hover {
+  background: linear-gradient(90deg, #4ea9cc, #035a7c);
+  transform: translateY(-3px);
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+/* Delete Button */
+button.delete {
+  background: transparent;
+  color: #0a5c7c;
+  border: 2px solid #0a5c7c;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+button.delete:hover {
+  color: #4ea9cc;
+  border-color: #4ea9cc;
+}
+
+/* Main Layout */
+main {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.input {
+  flex: 1;
+  margin: 1rem 0.5rem 1rem 1rem;
+}
+
+.output {
+  flex: 2;
+  margin: 1rem 1rem 1rem 0.5rem;
+}
+
+/* Table Styling */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2rem;
+  font-size: 1rem;
+}
+
+td,
+th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 12px;
+  word-break: break-word;
+}
+
+th {
+  font-weight: bold;
+  background: linear-gradient(90deg, #035a7c, #4ea9cc);
+  color: white;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+tr:nth-child(even) {
+  background-color: rgba(78, 169, 204, 0.1);
+}
+
+tr:hover {
+  background-color: rgba(78, 169, 204, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+/* Notification Message Styling */
+#message {
+  margin-top: 1rem;
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  padding: 1rem;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: bold;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+#message.success {
+  background-color: #4caf50;
+  color: white;
+  visibility: visible;
+  opacity: 1;
+}
+
+#message.error {
+  background-color: #f44336;
+  color: white;
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
   label {
-    display: inline-block;
-    width: 80px;
-    margin-bottom: 0.5rem;
-  }
-  
-  .form_group {
-    margin: 1rem 0;
-  }
-  
-  input {
-    font-family: inherit;
-    font-size: inherit;
-    padding: 0.625rem;
-    border: 1px solid grey;
-    border-radius: 4px;
     width: 100%;
-    max-width: 300px;
   }
-  
+
+  input,
   button {
-    font-family: inherit;
-    background-color: #035a7c;
-    color: white;
-    padding: 1rem 2rem;
-    border-radius: 5px;
-    border: none;
-    margin: 1rem 0 1rem;
-    text-transform: capitalize;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  button:hover {
-    background-color: #02485e;
-  }
-  
-  button.delete {
-    background-color: transparent;
-    color: #0a5c7c;
-    border: none;
-    cursor: pointer;
-    padding: 0.5rem 1rem;
-    font-size: 0.9rem;
-    transition: color 0.3s ease;
-    margin: 0;
-  }
-  
-  button.delete:hover {
-    color: #02485e;
-  }
-  
-  main {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  
-  .input {
-    flex: 1;
-    margin: 1rem 0.5rem 1rem 1rem;
-  }
-  
-  .output {
-    flex: 2;
-    margin: 1rem 1rem 1rem 0.5rem;
-  }
-  
-  table {
-    border-collapse: collapse;
     width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 2rem;
   }
-  
-  td,
-  th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-    word-break: break-all;
-  }
-  
-  th {
-    font-weight: bold;
-    background-color: #4ea9cc;
-    color: white;
-    text-transform: uppercase;
-  }
-  
-  tr:nth-child(even) {
-    background-color: #f3f3f3;
-  }
-  
-  #message {
-    margin-top: 1rem;
-    position: fixed;
-    top:1rem;
-    right:1rem;
+
+  .container {
     padding: 1rem;
-    border-radius: 5px;
-    text-align: center;
-    font-size: 1rem;
-    font-weight: bold;
-    visibility: hidden;
-    transition: visibility 0.3s ease;
   }
-  
-  #message.success {
-    background-color: #4caf50;
-    color: white;
-    visibility: visible;
+
+  table {
+    font-size: 0.9rem;
   }
-  
-  #message.error {
-    background-color: #f44336;
-    color: white;
-    visibility: visible;
-  }
-  
-  @media (max-width: 768px) {
-    label {
-      width: 100%;
-    }
-  
-    input,
-    button {
-      width: 100%;
-    }
-  
-    .container {
-      padding: 1rem;
-    }
-  
-    table {
-      font-size: 0.9rem;
-    }
-  }
-  
+}
